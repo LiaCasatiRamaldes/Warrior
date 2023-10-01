@@ -15,8 +15,8 @@ class Warrior
     public Weapon weapon { get; private set; }
     public Armor armor { get; private set; }
 
-    private static int GoodGuyStartingHealth = 10;
-    private static int BadGuyStartingHealth = 10;
+    private static int GoodGuyStartingHealth = 20;
+    private static int BadGuyStartingHealth = 100;
 
     //construtor com nome e facção do personagem
     public Warrior(string nameChose, Faction factionChose)
@@ -40,21 +40,54 @@ class Warrior
 
     }
 
+    //public void Attack(Warrior enemy)
+    //{ 
+    //    enemy.health -= weapon.damage;
+    //    if (enemy.health > 0)
+    //    {
+    //        Console.WriteLine("Atacar novamente?S/N");
+    //        Attack(enemy);
+            
+    //    }
+    //    else
+    //    {
+
+    //        Console.WriteLine("Você derrotou o inimigo");
+
+    //    }
+    //}
     public void Attack(Warrior enemy)
-    { 
+    {
         enemy.health -= weapon.damage;
-        if (enemy.health <= 0)
+        if (enemy.health > 0)
         {
-            Console.WriteLine("Você derrotou o inimigo");
+            Console.WriteLine("Atacar novamente?S/N");
+            Attack(enemy);
+
         }
         else
         {
-            Console.WriteLine("Atacar novamente?");
-            Attack(enemy);
+
+            Console.WriteLine("Você derrotou o inimigo");
+
         }
     }
-
 }
 
 
 
+//enemy
+// .-.
+//(o o) 
+//| O \
+// \   \
+//  \   \
+//   `~~~'
+
+//you
+//   .-.
+//| (@ @)
+// \ \-/
+//  \/ \
+//   \ /\
+//   _H_ \

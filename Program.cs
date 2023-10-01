@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -9,19 +10,88 @@ using System.Threading.Tasks;
 
 class Program
 {
-    public void Menu()
+    public void Menu(Program programa)
     {
-        //Console.WriteLine("Bem vindo a:");
-        //Console.WriteLine("                         _            ");
-        //Console.WriteLine("                        (_)           ");
-        //Console.WriteLine("__      ____ _ _ __ _ __ _  ___  _ __");
-        //Console.WriteLine("\ \ /\ / / _` | '__| '__| |/ _ \| '__|");
-        //Console.WriteLine(" \ V  V / (_| | |  | |  | | (_) | |   ");
-        //Console.WriteLine("  \_/\_/ \__,_|_|  |_|  |_|\___/|_|   ");
 
-
-        Console.WriteLine("Criar guerreiro:");
+        //opções menu
+        Console.WriteLine("MENU:");
+        Console.WriteLine("1. Criar guerreiro.");
+        Console.WriteLine("2. Sair do jogo.");
         int opcaoMenu = int.Parse(Console.ReadLine());
+
+        if (opcaoMenu == 1)
+        {
+            // Aguarda por 3segundos e limpa o console
+            Thread.Sleep(1000);
+            Console.Clear();
+
+            //criando o guerreiro e exibindo infos
+            Warrior guerreiro = programa.CreateWarrior();
+            Console.WriteLine("Seu guerreiro foi montado:");
+            Console.WriteLine("   .-.");
+            Console.WriteLine("| (@ @)");
+            Console.WriteLine(" \\ \\-/  Nome: " + guerreiro.name + " (" + guerreiro.faction + ") Vida: " + guerreiro.health);
+            Console.WriteLine("  \\/ \\");
+            Console.WriteLine("   \\ /\\");
+            Console.WriteLine("   _H_ \\");
+
+            //criando o inimigo e exibindo infos
+            Warrior inimigo = programa.CreateEnemy(guerreiro);
+
+            //Luta
+            Console.WriteLine("deseja lutar?S/N");
+            string lutar = Console.ReadLine();
+               
+            if (lutar.ToUpper() == "S")
+            {
+                while (inimigo.health > 0)
+                {
+                    //imprimindo inimigo a esquerda da tela.
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine(inimigo.name);
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine(" .-.");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine("(o o)");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine("| O \\");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine(" \\   \\");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine("  \\   \\");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine("   `~~~'");
+                    Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                    Console.WriteLine("Vida:" + inimigo.health);
+
+                    //ataque
+                    guerreiro.Attack(inimigo);
+                    Console.WriteLine("Nome: " + inimigo.name + " (" + inimigo.faction + ") Saúde: " + guerreiro.health);
+
+                    Console.WriteLine("deseja lutar?S/N");
+                    lutar = Console.ReadLine();
+                }
+
+            }
+            else if (lutar.ToUpper() == "N")
+            {
+                Console.WriteLine("Então até uma próxima" + guerreiro.name + "...");
+                Environment.Exit(0);
+            }
+                
+
+        }
+        else if (opcaoMenu == 2)
+        {
+            Environment.Exit(0);
+        }
+        else
+        {
+            Console.WriteLine("Opção invalida");
+            Environment.Exit(0);
+            //Menu(programa);
+        }
+
     }
 
     public Warrior CreateWarrior()
@@ -72,31 +142,41 @@ class Program
     //public void Action() { }
     static void Main(string[] args)
     {
-        
+        //Criando o objeto programa
         Program programa = new Program();
-        Warrior guerreiro = programa.CreateWarrior();
-        Console.WriteLine("Seu guerreiro foi montado:");
-        Console.WriteLine("Nome: " + guerreiro.name + " (" + guerreiro.faction + ") Saúde: " + guerreiro.health);
 
-        Warrior inimigo = programa.CreateEnemy(guerreiro);
+        //Entrada do jogo
+        Console.WriteLine("Bem vindo a:");
+        Console.WriteLine("                         _            ");
+        Console.WriteLine("                        (_)           ");
+        Console.WriteLine("__      ____ _ _ __ _ __ _  ___  _ __");
+        Console.WriteLine("\\ \\ /\\ / / _` | '__| '__| |/ _ \\| '__|");
+        Console.WriteLine(" \\ V  V / (_| | |  | |  | | (_) | |   ");
+        Console.WriteLine("  \\_/\\_/ \\__,_|_|  |_|  |_|\\___/|_|   ");
 
-        Console.WriteLine("deseja lutar?S/N");
-        string lutar = Console.ReadLine();
+        // Aguarda por 1segundos e limpa o console
+        Thread.Sleep(1000); 
+        Console.Clear();
 
-        if (lutar == "S")
-        {  
-            guerreiro.Attack(inimigo);
-        }
-        else if (lutar == "N")
-        {
-            Console.WriteLine("Então até uma próxima" + guerreiro.name);
-        }
+        //Chamando menu de opções
+        programa.Menu(programa);
+
+        
+        //Console.WriteLine("Bem vindo a:");
+
+
+
+        
+       
+
+
+        
 
         //Warrior inimigo = programa.CreateEnemy(guerreiro);
-        //Console.WriteLine("Nome: " + inimigo.name + " (" + inimigo.faction + ") Saúde: " + guerreiro.health);
-
         
 
+
+    
     }
 }
 
