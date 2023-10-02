@@ -15,7 +15,7 @@ class Warrior
     public Weapon weapon { get; private set; }
     public Armor armor { get; private set; }
 
-    private static int GoodGuyStartingHealth = 20;
+    private static int GoodGuyStartingHealth = 200;
     private static int BadGuyStartingHealth = 100;
 
     //construtor com nome e facção do personagem
@@ -28,6 +28,7 @@ class Warrior
             health = BadGuyStartingHealth;
             weapon = new Weapon(Faction.badGuy);
             armor = new Armor(Faction.badGuy);
+
         }
         else
         {
@@ -40,37 +41,60 @@ class Warrior
 
     }
 
-    //public void Attack(Warrior enemy)
-    //{ 
-    //    enemy.health -= weapon.damage;
-    //    if (enemy.health > 0)
-    //    {
-    //        Console.WriteLine("Atacar novamente?S/N");
-    //        Attack(enemy);
-            
-    //    }
-    //    else
-    //    {
+    public void Defense(Warrior enemy)
+    {
 
-    //        Console.WriteLine("Você derrotou o inimigo");
-
-    //    }
-    //}
+    }
     public void Attack(Warrior enemy)
     {
-        enemy.health -= weapon.damage;
-        if (enemy.health > 0)
+        //Luta
+        Console.WriteLine("Lutar?S/N");
+        string lutar = Console.ReadLine();
+
+        if (lutar.ToUpper() == "S")
         {
-            Console.WriteLine("Atacar novamente?S/N");
-            Attack(enemy);
+            while (enemy.health > 0)
+            {
+                //ataque
+                Console.WriteLine("Ataque de: " + weapon.damage);
+                enemy.health -= weapon.damage;
 
+                //imprimindo inimigo a esquerda da tela.
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(enemy.name);
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(" .-.");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("(o o)");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("| O \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(" \\   \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("  \\   \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("   `~~~'");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("Vida:" + enemy.health);
+
+                //Console.WriteLine(name);
+                //Console.WriteLine("   .-.");
+                //Console.WriteLine("| (@ @)");
+                //Console.WriteLine(" \\ \\-/");
+                //Console.WriteLine("  \\/ \\");
+                //Console.WriteLine("   \\ /\\");
+                //Console.WriteLine("   _H_ \\");
+                //Console.WriteLine("Vida: " + health);
+                Attack(enemy);
+            }
+            
         }
-        else
+        else if (lutar.ToUpper() == "N")
         {
-
-            Console.WriteLine("Você derrotou o inimigo");
-
+            Console.WriteLine("Então até uma próxima" + name + "...");
+            Environment.Exit(0);
         }
+        else { Environment.Exit(0); }
     }
 }
 

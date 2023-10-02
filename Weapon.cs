@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 class Weapon
 {
-    public Faction faction { get; private set; }
-    public int damage { get; private set; }
+    public Faction faction { get; set; }
+    public int damage { get; set; }
     private static int goodGuyDamage = 10;
     private static int badGuyDamage = 7;
 
