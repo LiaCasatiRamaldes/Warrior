@@ -56,38 +56,35 @@ class Program
             Console.WriteLine("   `~~~'");
             Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
             Console.WriteLine("Vida:" + inimigo.health);
-
-            guerreiro.Attack(inimigo);
-
-            inimigo.Attack(guerreiro);
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("Ataque:" + inimigo.weapon.damage);
 
 
-            //Console.WriteLine("Antes de Lutar é bom colocar uma armadura!");
-            //Console.WriteLine("Colocar Armadura de "+ guerreiro.armor.armorPoints +" de defesa?S/N");
-            //string defesa = Console.ReadLine();
+            Console.WriteLine("Antes de Lutar é bom colocar uma armadura!");
+            Console.WriteLine("Colocar Armadura de " + guerreiro.armor.armorPoints + " de defesa?S/N");
+            string defesa = Console.ReadLine();
 
-            //if(defesa.ToUpper() == "S")
-            //{
-            //    inimigo.weapon.damage -= guerreiro.armor.armorPoints;
-            //    inimigo.Attack(guerreiro);
-            //}
-            //else if (defesa.ToUpper() == "N")
-            //{
-            //    Console.WriteLine("Acabo com o inimigo na mão!");
-            //    guerreiro.Attack(inimigo);
-
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Opção invalida");
-            //    Environment.Exit(0);
-            //}
-
-
-            if (inimigo.health <= 0)
+            if (defesa.ToUpper() == "S")
             {
-                Console.WriteLine("Você derrotou o inimigo");
+                inimigo.weapon.damage -= guerreiro.armor.armorPoints;
+                guerreiro.Attack(inimigo);
+                inimigo.Attack(guerreiro);
             }
+            else if (defesa.ToUpper() == "N")
+            {
+                Console.WriteLine("Acabo com o inimigo na mão!");
+                guerreiro.Attack(inimigo);
+                inimigo.Attack(guerreiro);
+
+            }
+            else
+            {
+                Console.WriteLine("Opção invalida");
+                Environment.Exit(0);
+            }
+
+
+           
         }
         else if (opcaoMenu == 2)
         {

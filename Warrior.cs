@@ -15,8 +15,8 @@ class Warrior
     public Weapon weapon { get; private set; }
     public Armor armor { get; private set; }
 
-    private static int GoodGuyStartingHealth = 200;
-    private static int BadGuyStartingHealth = 100;
+    private static int GoodGuyStartingHealth = 40;
+    private static int BadGuyStartingHealth = 30;
 
     //construtor com nome e facção do personagem
     public Warrior(string nameChose, Faction factionChose)
@@ -53,7 +53,7 @@ class Warrior
 
         if (lutar.ToUpper() == "S")
         {
-            while (enemy.health > 0)
+            while (enemy.health >= 0 && this.health >= 0)
             {
                 //ataque
                 Console.WriteLine("Ataque de: " + weapon.damage);
@@ -88,15 +88,29 @@ class Warrior
                 Console.WriteLine("   \\ /\\");
                 Console.WriteLine("   _H_ \\");
                 Console.WriteLine("Vida: " + health);
+
+                //Thread.Sleep(800);
+                //Console.Clear();
+
                 Attack(enemy);
                 Attack(this);
 
             }
-            
+            if (enemy.health <= 0)
+            {
+                Console.WriteLine("Você derrotou o inimigo");
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.WriteLine("Você morreu :(");
+                Environment.Exit(0);
+            }
+
         }
         else if (lutar.ToUpper() == "N")
         {
-            Console.WriteLine("Então até uma próxima" + name + "...");
+            Console.WriteLine("Então até uma próxima " + name + "...");
             Environment.Exit(0);
         }
         else { Environment.Exit(0); }
