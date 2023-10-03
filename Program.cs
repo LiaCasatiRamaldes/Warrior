@@ -57,6 +57,8 @@ class Program
             Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
             Console.WriteLine("Vida:" + inimigo.health);
 
+            guerreiro.Attack(inimigo);
+
             inimigo.Attack(guerreiro);
 
 
@@ -81,7 +83,7 @@ class Program
             //    Environment.Exit(0);
             //}
 
-            
+
             if (inimigo.health <= 0)
             {
                 Console.WriteLine("Você derrotou o inimigo");

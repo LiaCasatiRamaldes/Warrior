@@ -77,15 +77,20 @@ class Warrior
                 Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
                 Console.WriteLine("Vida:" + enemy.health);
 
-                //Console.WriteLine(name);
-                //Console.WriteLine("   .-.");
-                //Console.WriteLine("| (@ @)");
-                //Console.WriteLine(" \\ \\-/");
-                //Console.WriteLine("  \\/ \\");
-                //Console.WriteLine("   \\ /\\");
-                //Console.WriteLine("   _H_ \\");
-                //Console.WriteLine("Vida: " + health);
+                Console.WriteLine("Oh não ele te atacou de volta com " + enemy.weapon.damage + " de dano");
+                this.health -= enemy.weapon.damage;
+
+                Console.WriteLine(name);
+                Console.WriteLine("   .-.");
+                Console.WriteLine("| (@ @)");
+                Console.WriteLine(" \\ \\-/");
+                Console.WriteLine("  \\/ \\");
+                Console.WriteLine("   \\ /\\");
+                Console.WriteLine("   _H_ \\");
+                Console.WriteLine("Vida: " + health);
                 Attack(enemy);
+                Attack(this);
+
             }
             
         }
