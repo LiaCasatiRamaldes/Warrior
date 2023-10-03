@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -9,19 +10,92 @@ using System.Threading.Tasks;
 
 class Program
 {
-    public void Menu()
+    public void Menu(Program programa)
     {
-        //Console.WriteLine("Bem vindo a:");
-        //Console.WriteLine("                         _            ");
-        //Console.WriteLine("                        (_)           ");
-        //Console.WriteLine("__      ____ _ _ __ _ __ _  ___  _ __");
-        //Console.WriteLine("\ \ /\ / / _` | '__| '__| |/ _ \| '__|");
-        //Console.WriteLine(" \ V  V / (_| | |  | |  | | (_) | |   ");
-        //Console.WriteLine("  \_/\_/ \__,_|_|  |_|  |_|\___/|_|   ");
 
-
-        Console.WriteLine("Criar guerreiro:");
+        //opções menu
+        Console.WriteLine("MENU:");
+        Console.WriteLine("1. Criar guerreiro.");
+        Console.WriteLine("2. Sair do jogo.");
         int opcaoMenu = int.Parse(Console.ReadLine());
+
+        if (opcaoMenu == 1)
+        {
+            // Aguarda por 3segundos e limpa o console
+            Thread.Sleep(1000);
+            Console.Clear();
+
+            //criando o guerreiro e exibindo infos
+            Warrior guerreiro = programa.CreateWarrior();
+            Console.WriteLine("Seu guerreiro foi montado:");
+            Console.WriteLine("   .-.");
+            Console.WriteLine("| (@ @)");
+            Console.WriteLine(" \\ \\-/  Nome: " + guerreiro.name + " (" + guerreiro.faction + ") Vida: " + guerreiro.health);
+            Console.WriteLine("  \\/ \\");
+            Console.WriteLine("   \\ /\\");
+            Console.WriteLine("   _H_ \\");
+
+            //criando o inimigo e exibindo infos
+            Warrior inimigo = programa.CreateEnemy(guerreiro);
+            Console.WriteLine("Ai vem o seu inimigo");
+
+            //imprimindo inimigo a esquerda da tela.
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine(inimigo.name);
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine(" .-.");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("(o o)");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("| O \\");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine(" \\   \\");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("  \\   \\");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("   `~~~'");
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("Vida:" + inimigo.health);
+            Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+            Console.WriteLine("Ataque:" + inimigo.weapon.damage);
+
+
+            Console.WriteLine("Antes de Lutar é bom colocar uma armadura!");
+            Console.WriteLine("Colocar Armadura de " + guerreiro.armor.armorPoints + " de defesa?S/N");
+            string defesa = Console.ReadLine();
+
+            if (defesa.ToUpper() == "S")
+            {
+                inimigo.weapon.damage -= guerreiro.armor.armorPoints;
+                guerreiro.Attack(inimigo);
+                inimigo.Attack(guerreiro);
+            }
+            else if (defesa.ToUpper() == "N")
+            {
+                Console.WriteLine("Acabo com o inimigo na mão!");
+                guerreiro.Attack(inimigo);
+                inimigo.Attack(guerreiro);
+
+            }
+            else
+            {
+                Console.WriteLine("Opção invalida");
+                Environment.Exit(0);
+            }
+
+
+           
+        }
+        else if (opcaoMenu == 2)
+        {
+            Environment.Exit(0);
+        }
+        else
+        {
+            Console.WriteLine("Opção invalida");
+            Environment.Exit(0);
+        }
+
     }
 
     public Warrior CreateWarrior()
@@ -46,8 +120,7 @@ class Program
         {
             Console.WriteLine("Esta opção não é permitida");
             factionWarrior = Faction.noFaction;
-            Console.WriteLine("Digite 1 para guerreiro do bem e 2 para guerreiro do mal");
-            //opcao = int.Parse(Console.ReadLine());
+            Environment.Exit(0);
         }
 
         //Criação do guerreiro
@@ -57,46 +130,43 @@ class Program
 
     public Warrior CreateEnemy(Warrior guerreiro)
     {
-        Warrior enemy = new Warrior("Inimigo", Faction.noFaction);
+        Faction enemyFaction;
         if (guerreiro.faction == Faction.badGuy)
         {
-            enemy.faction = Faction.goodGuy;
+            enemyFaction = Faction.goodGuy;
         }
-        else
+        else 
         {
-            enemy.faction = Faction.badGuy;
+            enemyFaction = Faction.badGuy;
         }
+        Warrior enemy = new Warrior("Inimigo", enemyFaction);
+
         return enemy;
     }
 
     //public void Action() { }
     static void Main(string[] args)
     {
-        
+        //Criando o objeto programa
         Program programa = new Program();
-        Warrior guerreiro = programa.CreateWarrior();
-        Console.WriteLine("Seu guerreiro foi montado:");
-        Console.WriteLine("Nome: " + guerreiro.name + " (" + guerreiro.faction + ") Saúde: " + guerreiro.health);
 
-        Warrior inimigo = programa.CreateEnemy(guerreiro);
+        //Entrada do jogo
+        Console.WriteLine("Bem vindo a:");
+        Console.WriteLine("                         _            ");
+        Console.WriteLine("                        (_)           ");
+        Console.WriteLine("__      ____ _ _ __ _ __ _  ___  _ __");
+        Console.WriteLine("\\ \\ /\\ / / _` | '__| '__| |/ _ \\| '__|");
+        Console.WriteLine(" \\ V  V / (_| | |  | |  | | (_) | |   ");
+        Console.WriteLine("  \\_/\\_/ \\__,_|_|  |_|  |_|\\___/|_|   ");
 
-        Console.WriteLine("deseja lutar?S/N");
-        string lutar = Console.ReadLine();
+        // Aguarda por 1segundos e limpa o console
+        Thread.Sleep(1000); 
+        Console.Clear();
 
-        if (lutar == "S")
-        {  
-            guerreiro.Attack(inimigo);
-        }
-        else if (lutar == "N")
-        {
-            Console.WriteLine("Então até uma próxima" + guerreiro.name);
-        }
+        //Chamando menu de opções
+        programa.Menu(programa);
 
-        //Warrior inimigo = programa.CreateEnemy(guerreiro);
-        //Console.WriteLine("Nome: " + inimigo.name + " (" + inimigo.faction + ") Saúde: " + guerreiro.health);
-
-        
-
+    
     }
 }
 

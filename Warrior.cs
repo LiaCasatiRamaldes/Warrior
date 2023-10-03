@@ -15,8 +15,8 @@ class Warrior
     public Weapon weapon { get; private set; }
     public Armor armor { get; private set; }
 
-    private static int GoodGuyStartingHealth = 10;
-    private static int BadGuyStartingHealth = 10;
+    private static int GoodGuyStartingHealth = 40;
+    private static int BadGuyStartingHealth = 30;
 
     //construtor com nome e facção do personagem
     public Warrior(string nameChose, Faction factionChose)
@@ -28,6 +28,7 @@ class Warrior
             health = BadGuyStartingHealth;
             weapon = new Weapon(Faction.badGuy);
             armor = new Armor(Faction.badGuy);
+
         }
         else
         {
@@ -40,21 +41,96 @@ class Warrior
 
     }
 
-    public void Attack(Warrior enemy)
-    { 
-        enemy.health -= weapon.damage;
-        if (enemy.health <= 0)
-        {
-            Console.WriteLine("Você derrotou o inimigo");
-        }
-        else
-        {
-            Console.WriteLine("Atacar novamente?");
-            Attack(enemy);
-        }
-    }
+    public void Defense(Warrior enemy)
+    {
 
+    }
+    public void Attack(Warrior enemy)
+    {
+        //Luta
+        Console.WriteLine("Lutar?S/N");
+        string lutar = Console.ReadLine();
+
+        if (lutar.ToUpper() == "S")
+        {
+            while (enemy.health >= 0 && this.health >= 0)
+            {
+                //ataque
+                Console.WriteLine("Ataque de: " + weapon.damage);
+                enemy.health -= weapon.damage;
+
+                //imprimindo inimigo a esquerda da tela.
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(enemy.name);
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(" .-.");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("(o o)");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("| O \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine(" \\   \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("  \\   \\");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("   `~~~'");
+                Console.SetCursorPosition(Console.WindowWidth - "ooooooooooooo".Length, Console.CursorTop);
+                Console.WriteLine("Vida:" + enemy.health);
+
+                Console.WriteLine("Oh não ele te atacou de volta com " + enemy.weapon.damage + " de dano");
+                this.health -= enemy.weapon.damage;
+
+                Console.WriteLine(name);
+                Console.WriteLine("   .-.");
+                Console.WriteLine("| (@ @)");
+                Console.WriteLine(" \\ \\-/");
+                Console.WriteLine("  \\/ \\");
+                Console.WriteLine("   \\ /\\");
+                Console.WriteLine("   _H_ \\");
+                Console.WriteLine("Vida: " + health);
+
+                //Thread.Sleep(800);
+                //Console.Clear();
+
+                Attack(enemy);
+                Attack(this);
+
+            }
+            if (enemy.health <= 0)
+            {
+                Console.WriteLine("Você derrotou o inimigo");
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.WriteLine("Você morreu :(");
+                Environment.Exit(0);
+            }
+
+        }
+        else if (lutar.ToUpper() == "N")
+        {
+            Console.WriteLine("Então até uma próxima " + name + "...");
+            Environment.Exit(0);
+        }
+        else { Environment.Exit(0); }
+    }
 }
 
 
 
+//enemy
+// .-.
+//(o o) 
+//| O \
+// \   \
+//  \   \
+//   `~~~'
+
+//you
+//   .-.
+//| (@ @)
+// \ \-/
+//  \/ \
+//   \ /\
+//   _H_ \
